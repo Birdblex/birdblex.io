@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bird Sound and Animation</title>
+<style>
+  #bird {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.5s ease, filter 0.2s;
+  }
+</style>
+</head>
+<body>
+
+<img id="bird" src="bird_image_url.jpg" alt="Bird Image">
+
+<audio id="birdSound">
+  <source src="bird_sound.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  var bird = document.getElementById('bird');
+  var birdSound = document.getElementById('birdSound');
+  var isFlipped = false;
+
+  function playSoundAndAnimate(event) {
+    birdSound.currentTime = 0; // Rewind sound to the beginning
+    birdSound.play();
+    
+    // Change bird's direction based on click position
+    var xPos = event.clientX - bird.offsetLeft;
+    var centerY = bird.offsetTop + (bird.offsetHeight / 2);
+    if (xPos > bird.offsetWidth / 2) {
+      isFlipped = !isFlipped;
+    }
+
+    // Apply animation and color change
+    bird.style.transform = isFlipped ? 'scaleX(-1)' : 'scaleX(1)';
+    bird.style.filter = 'hue-rotate(' + (Math.random() * 360) + 'deg)';
+  }
+
+  bird.addEventListener('click', playSoundAndAnimate);
+</script>
+
+</body>
+</html>
